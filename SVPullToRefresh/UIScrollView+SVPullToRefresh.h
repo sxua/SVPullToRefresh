@@ -18,7 +18,7 @@
 - (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler;
 - (void)triggerPullToRefresh;
 
-@property (nonatomic, assign) CGFloat pullToRefreshViewHeight;
+@property (nonatomic) CGFloat pullToRefreshViewHeight;
 @property (nonatomic, strong, readonly) SVPullToRefreshView *pullToRefreshView;
 @property (nonatomic, assign) BOOL showsPullToRefresh;
 

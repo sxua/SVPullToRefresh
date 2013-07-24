@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIScrollView+SVPullToRefresh.h"
 
+static CGFloat const SVPullToRefreshViewHeight = 60;
+
 @interface SVPullToRefreshArrow : UIView
 
 @property (nonatomic, strong) UIColor *arrowColor;
@@ -55,7 +57,7 @@ static char UIScrollViewPullToRefreshView;
 
 @implementation UIScrollView (SVPullToRefresh)
 
-@dynamic pullToRefreshView, showsPullToRefresh;
+@dynamic pullToRefreshView, showsPullToRefresh, pullToRefreshViewHeight;
 
 - (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler {
     
@@ -110,6 +112,17 @@ static char UIScrollViewPullToRefreshView;
 
 - (BOOL)showsPullToRefresh {
     return !self.pullToRefreshView.hidden;
+}
+
+- (void)setPullToRefreshViewHeight:(CGFloat)pullToRefreshViewHeight {
+    objc_setAssociatedObject(self, &UIScrollViewPullToRefreshViewHeight,
+                             @(pullToRefreshViewHeight),
+                             OBJC_ASSOCIATION_COPY);
+}
+
+- (CGFloat)pullToRefreshViewHeight {
+    NSNumber *height = objc_getAssociatedObject(self, &UIScrollViewPullToRefreshViewHeight);
+    return (height) ? height.floatValue : SVPullToRefreshViewHeight;
 }
 
 @end
