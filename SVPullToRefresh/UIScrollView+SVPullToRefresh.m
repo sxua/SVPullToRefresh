@@ -10,9 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIScrollView+SVPullToRefresh.h"
 
-
-static CGFloat const SVPullToRefreshViewHeight = 60;
-
 @interface SVPullToRefreshArrow : UIView
 
 @property (nonatomic, strong) UIColor *arrowColor;
@@ -63,7 +60,7 @@ static char UIScrollViewPullToRefreshView;
 - (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler {
     
     if(!self.pullToRefreshView) {
-        SVPullToRefreshView *view = [[SVPullToRefreshView alloc] initWithFrame:CGRectMake(0, -SVPullToRefreshViewHeight, self.bounds.size.width, SVPullToRefreshViewHeight)];
+        SVPullToRefreshView *view = [[SVPullToRefreshView alloc] initWithFrame:CGRectMake(0, -self.pullToRefreshViewHeight, self.bounds.size.width, self.pullToRefreshViewHeight)];
         view.pullToRefreshActionHandler = actionHandler;
         view.scrollView = self;
         [self addSubview:view];
@@ -243,7 +240,7 @@ static char UIScrollViewPullToRefreshView;
 - (void)setScrollViewContentInsetForLoading {
     CGFloat offset = MAX(self.scrollView.contentOffset.y * -1, 0);
     UIEdgeInsets currentInsets = self.scrollView.contentInset;
-    currentInsets.top = MIN(offset, self.originalTopInset + SVPullToRefreshViewHeight);
+    currentInsets.top = MIN(offset, self.originalTopInset + self.pullToRefreshViewHeight);
     [self setScrollViewContentInset:currentInsets];
 }
 
