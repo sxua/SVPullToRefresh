@@ -54,6 +54,7 @@ static CGFloat const SVPullToRefreshViewHeight = 60;
 #import <objc/runtime.h>
 
 static char UIScrollViewPullToRefreshView;
+static char UIScrollViewPullToRefreshViewHeight;
 
 @implementation UIScrollView (SVPullToRefresh)
 
