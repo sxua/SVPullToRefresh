@@ -14,8 +14,6 @@
 #define fequal(a,b) (fabs((a) - (b)) < FLT_EPSILON)
 #define fequalzero(a) (fabs(a) < FLT_EPSILON)
 
-static CGFloat const SVPullToRefreshViewHeight = 60;
-
 @interface SVPullToRefreshArrow : UIView
 
 @property (nonatomic, strong) UIColor *arrowColor;
@@ -137,14 +135,14 @@ static char UIScrollViewPullToRefreshViewHeight;
             CGFloat yOrigin = 0;
             switch (self.pullToRefreshView.position) {
                 case SVPullToRefreshPositionTop:
-                    yOrigin = -SVPullToRefreshViewHeight;
+                    yOrigin = -self.pullToRefreshViewHeight;
                     break;
                 case SVPullToRefreshPositionBottom:
                     yOrigin = self.contentSize.height;
                     break;
             }
             
-            self.pullToRefreshView.frame = CGRectMake(0, yOrigin, self.bounds.size.width, SVPullToRefreshViewHeight);
+            self.pullToRefreshView.frame = CGRectMake(0, yOrigin, self.bounds.size.width, self.pullToRefreshViewHeight);
         }
     }
 }
@@ -161,7 +159,7 @@ static char UIScrollViewPullToRefreshViewHeight;
 
 - (CGFloat)pullToRefreshViewHeight {
     NSNumber *height = objc_getAssociatedObject(self, &UIScrollViewPullToRefreshViewHeight);
-    return (height) ? height.floatValue : SVPullToRefreshViewHeight;
+    return (height) ? height.floatValue : self.pullToRefreshViewHeight;
 }
 
 @end
@@ -389,13 +387,13 @@ static char UIScrollViewPullToRefreshViewHeight;
         CGFloat yOrigin;
         switch (self.position) {
             case SVPullToRefreshPositionTop:
-                yOrigin = -SVPullToRefreshViewHeight;
+                yOrigin = -self.scrollView.pullToRefreshViewHeight;
                 break;
             case SVPullToRefreshPositionBottom:
                 yOrigin = MAX(self.scrollView.contentSize.height, self.scrollView.bounds.size.height);
                 break;
         }
-        self.frame = CGRectMake(0, yOrigin, self.bounds.size.width, SVPullToRefreshViewHeight);
+        self.frame = CGRectMake(0, yOrigin, self.bounds.size.width, self.scrollView.pullToRefreshViewHeight);
     }
     else if([keyPath isEqualToString:@"frame"])
         [self layoutSubviews];
